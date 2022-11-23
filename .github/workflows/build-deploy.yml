@@ -4,12 +4,15 @@ name: Release Deployment
 on:
   workflow_call:
     secrets:
-      token:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
         required: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
 
     # Modify the Environment variables to meet your requirements
     env:
@@ -31,18 +34,23 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - name: Use Node.js 14
+          
+      - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '18'
+          
       - name: Install dependencies
         run: yarn
       - name: Build
         run: yarn build
+        
       - name: Update AppD URL
         run:  node ./gh-action.js
 
       # This section can be modified where needed
       - name: Production Deploy
-        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'}}
-        run: aws s3 sync $BUILD_OUTPUT_FOLDER s3://$S3_BUCKET_NAME/production/$GITHUB_REPOSITORY --acl public-read
+#         if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'}}
+        run: |
+            aws s3 sync $BUILD_OUTPUT_FOLDER s3://$S3_BUCKET_NAME/$GITHUB_REF_NAME/$GITHUB_REPOSITORY --acl public-read
+            aws s3 sync $BUILD_OUTPUT_FOLDER s3://$S3_BUCKET_NAME/latest/$GITHUB_REPOSITORY --acl public-read
