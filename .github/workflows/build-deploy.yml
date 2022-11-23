@@ -50,7 +50,6 @@ jobs:
 
       # This section can be modified where needed
       - name: Production Deploy
-#         if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'}}
         run: |
-            aws s3 sync $BUILD_OUTPUT_FOLDER s3://$S3_BUCKET_NAME/$GITHUB_REF_NAME/$GITHUB_REPOSITORY --acl public-read
-            aws s3 sync $BUILD_OUTPUT_FOLDER s3://$S3_BUCKET_NAME/latest/$GITHUB_REPOSITORY --acl public-read
+            aws s3 sync $BUILD_OUTPUT_FOLDER s3://$S3_BUCKET_NAME/$GITHUB_REPOSITORY/$GITHUB_REF_NAME --acl public-read
+            aws s3 sync $BUILD_OUTPUT_FOLDER s3://$S3_BUCKET_NAME/$GITHUB_REPOSITORY/latest --acl public-read
