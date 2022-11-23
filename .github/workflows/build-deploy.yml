@@ -20,7 +20,7 @@ jobs:
       S3_BUCKET_NAME: finsemble-sd-v6
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Cache modules
         uses: actions/cache@v1
         id: yarn-cache
@@ -38,7 +38,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '16'
           
       - name: Install dependencies
         run: yarn
