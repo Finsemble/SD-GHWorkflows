@@ -16,7 +16,7 @@ async function run() {
      * Production URL:
      * https://salesdemo-v6.finsemble.com/production/ChartIQ/Finsemble-SD-News/index.html
      */
-    const S3_URL = `https://salesdemo-v6.finsemble.com/production/${process.env.GITHUB_REPOSITORY}/index.html`
+    const S3_URL = `https://salesdemo-v6.finsemble.com/${process.env.GITHUB_REPOSITORY}/latest/index.html`
     let config = Object.assign({}, appd)
 
     for (let val in config.appd) {
