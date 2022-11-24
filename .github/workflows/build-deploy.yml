@@ -25,7 +25,7 @@ jobs:
 
     # Modify the Environment variables to meet your requirements
     env:
-      BUILD_OUTPUT_FOLDER: ${{inputs.output-folder || "./build" }}
+      BUILD_OUTPUT_FOLDER: ${{inputs.output-folder || './build' }}
       S3_BUCKET_NAME: finsemble-sd-v6
 
     steps:
